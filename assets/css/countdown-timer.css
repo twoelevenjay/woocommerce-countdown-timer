@@ -1,0 +1,220 @@
+/* WooCommerce Countdown Timer Styles */
+
+.woo-countdown-timer {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    box-shadow: 0 4px 15px rgba(238, 90, 82, 0.3);
+    animation: pulse-glow 2s infinite alternate;
+}
+
+.woo-countdown-timer-compact {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 8px 0;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-size: 0.9em;
+    box-shadow: 0 2px 8px rgba(238, 90, 82, 0.3);
+}
+
+.woo-countdown-timer-shop {
+    margin-top: 10px;
+}
+
+.countdown-active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.countdown-message {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.countdown-display {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.4em;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 1px;
+    min-width: 120px;
+    display: inline-block;
+}
+
+.countdown-hours,
+.countdown-minutes,
+.countdown-seconds {
+    display: inline-block;
+    min-width: 22px;
+    text-align: center;
+}
+
+.countdown-expired {
+    padding: 10px 0;
+}
+
+.countdown-expired .countdown-message {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* Compact version adjustments */
+.woo-countdown-timer-compact .countdown-message {
+    font-size: 14px;
+}
+
+.woo-countdown-timer-compact .countdown-display {
+    font-size: 1.2em;
+    padding: 5px 10px;
+    min-width: 100px;
+}
+
+/* Animation */
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 4px 15px rgba(238, 90, 82, 0.3);
+    }
+    100% {
+        box-shadow: 0 6px 20px rgba(238, 90, 82, 0.5);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .woo-countdown-timer {
+        padding: 12px 15px;
+        margin: 10px 0;
+    }
+    
+    .countdown-active {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .countdown-message {
+        font-size: 14px;
+    }
+    
+    .countdown-display {
+        font-size: 1.2em;
+        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .woo-countdown-timer {
+        padding: 10px 12px;
+        border-radius: 6px;
+    }
+    
+    .countdown-message {
+        font-size: 13px;
+    }
+    
+    .countdown-display {
+        font-size: 1.1em;
+        padding: 5px 10px;
+        min-width: 90px;
+    }
+}
+
+/* Dark theme compatibility */
+@media (prefers-color-scheme: dark) {
+    .woo-countdown-timer,
+    .woo-countdown-timer-compact {
+        background: linear-gradient(135deg, #d63638, #c62d30);
+    }
+    
+    .countdown-display {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.25);
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .woo-countdown-timer,
+    .woo-countdown-timer-compact {
+        background: #d63638;
+        border: 2px solid #ffffff;
+    }
+    
+    .countdown-display {
+        background: #ffffff;
+        color: #d63638;
+        border: 2px solid #d63638;
+    }
+}
+
+/* RTL support */
+[dir="rtl"] .countdown-active {
+    direction: rtl;
+}
+
+[dir="rtl"] .countdown-display {
+    direction: ltr;
+    unicode-bidi: embed;
+}
+
+/* Print styles */
+@media print {
+    .woo-countdown-timer,
+    .woo-countdown-timer-compact {
+        background: none !important;
+        color: #333 !important;
+        border: 2px solid #333 !important;
+        box-shadow: none !important;
+        animation: none !important;
+    }
+    
+    .countdown-display {
+        background: none !important;
+        color: #333 !important;
+        border: 1px solid #333 !important;
+    }
+}
+
+/* Accessibility improvements */
+.woo-countdown-timer:focus-within,
+.woo-countdown-timer-compact:focus-within {
+    outline: 3px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+}
+
+.countdown-display[aria-live="polite"] {
+    position: relative;
+}
+
+/* Custom properties for easy theming */
+.woo-countdown-timer {
+    --countdown-bg-start: #ff6b6b;
+    --countdown-bg-end: #ee5a52;
+    --countdown-text-color: #ffffff;
+    --countdown-shadow-color: rgba(238, 90, 82, 0.3);
+    --countdown-display-bg: rgba(255, 255, 255, 0.2);
+    --countdown-display-border: rgba(255, 255, 255, 0.3);
+    
+    background: linear-gradient(135deg, var(--countdown-bg-start), var(--countdown-bg-end));
+    color: var(--countdown-text-color);
+    box-shadow: 0 4px 15px var(--countdown-shadow-color);
+}
+
+.countdown-display {
+    background: var(--countdown-display-bg);
+    border-color: var(--countdown-display-border);
+}

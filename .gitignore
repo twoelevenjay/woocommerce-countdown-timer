@@ -1,0 +1,38 @@
+# folders and files to be ignored by git
+
+### SVN ###
+.svn
+/trunk/*
+
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+### Node.js ###
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+### Ignore build artifacts ###
+/dist/
+/build/
+/public/
+
+### Ignore the temp readme.txt file ###
+readme.txt
+
+### PHP Composer (if added in the future) ###
+/vendor/
+/composer.lock
+
+### Others ###
+/.env
