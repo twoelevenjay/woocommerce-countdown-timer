@@ -1,0 +1,84 @@
+# Translation of Countdown Timer for WooCommerce in Portuguese (Brazil)
+# This file is distributed under the same license as the Countdown Timer for WooCommerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Countdown Timer for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woo-countdown-timer\n"
+"POT-Creation-Date: 2025-07-12 00:00:00+00:00\n"
+"PO-Revision-Date: 2025-07-12 00:00:00+00:00\n"
+"Last-Translator: \n"
+"Language-Team: Portuguese (Brazil)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.0\n"
+
+#: includes/class-admin.php:50
+msgid "%1$s requires %2$s to be installed and active."
+msgstr "%1$s requer que %2$s esteja instalado e ativo."
+
+#: includes/class-admin.php:75
+msgid "Countdown Timer"
+msgstr "Temporizador de contagem regressiva"
+
+#: includes/class-admin.php:90
+msgid "Countdown Timer Settings"
+msgstr "Configurações do temporizador de contagem regressiva"
+
+#: includes/class-admin.php:91
+msgid "Configure countdown timer display for same-day shipping deadlines."
+msgstr "Configure a exibição do temporizador de contagem regressiva para prazos de envio no mesmo dia."
+
+#: admin/admin-page.php:30
+msgid "Daily Cutoff Time"
+msgstr "Horário limite diário"
+
+#: admin/admin-page.php:36
+msgid "Set the daily cutoff time for same-day shipping (24-hour format)."
+msgstr "Defina o horário limite diário para envio no mesmo dia (formato de 24 horas)."
+
+#: admin/admin-page.php:41
+msgid "Countdown Message"
+msgstr "Mensagem de contagem regressiva"
+
+#: admin/admin-page.php:48
+msgid "Use {time} as a placeholder for the countdown timer. Example: \"Order within {time} for same-day shipping!\""
+msgstr "Use {time} como marcador para o temporizador. Exemplo: \"Peça dentro de {time} para envio no mesmo dia!\""
+
+#: admin/admin-page.php:53
+msgid "Weekend Shipping"
+msgstr "Envio no fim de semana"
+
+#: admin/admin-page.php:58
+msgid "Enable countdown timer on weekends"
+msgstr "Ativar temporizador de contagem regressiva nos fins de semana"
+
+#: admin/admin-page.php:61
+msgid "If disabled, the countdown timer will not appear on Saturdays and Sundays."
+msgstr "Se desativado, o temporizador não aparecerá aos sábados e domingos."
+
+#: admin/admin-page.php:66
+msgid "Urgency Threshold"
+msgstr "Limite de urgência"
+
+#: admin/admin-page.php:72
+msgid "When time remaining is below this threshold, the countdown will appear with urgency styling (in minutes)."
+msgstr "Quando o tempo restante estiver abaixo deste limite, a contagem regressiva aparecerá com estilo de urgência (em minutos)."
+
+#: admin/admin-page.php:77
+msgid "Very Urgent Threshold"
+msgstr "Limite de muito urgente"
+
+#: admin/admin-page.php:83
+msgid "When time remaining is below this threshold, the countdown will appear with high urgency styling (in minutes)."
+msgstr "Quando o tempo restante estiver abaixo deste limite, a contagem regressiva aparecerá com estilo de alta urgência (em minutos)."
+
+#: includes/class-countdown-display.php:120
+msgid "Cutoff time has passed"
+msgstr "O horário limite já passou"
+
+#: default message
+msgid "Order within {time} for same-day shipping!"
+msgstr "Peça dentro de {time} para envio no mesmo dia!"

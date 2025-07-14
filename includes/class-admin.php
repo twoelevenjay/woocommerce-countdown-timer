@@ -2,149 +2,149 @@
 /**
  * Admin functionality
  *
- * @package WooCountdownTimer
+ * @package Countdown_Timer_For_WooCommerce
  */
 
+// Prevent direct access
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class WooCountdownTimer_Admin {
+class Countdown_Timer_For_WooCommerce_Admin {
+    
+    private static $instance = null;
+    private $settings;
+    
+    public static function instance() {
+        if ( is_null( self::$instance ) ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
     
     public function __construct() {
-        add_action( 'admin_notices', array( $this, 'admin_notices' ) );
-        add_action( 'admin_init', array( $this, 'handle_settings_save' ) );
+        $this->settings = Countdown_Timer_For_WooCommerce_Settings::instance();
         
-        // Add product-level settings
-        add_action( 'woocommerce_product_options_shipping', array( $this, 'add_product_shipping_options' ) );
-        add_action( 'woocommerce_process_product_meta', array( $this, 'save_product_shipping_options' ) );
+        add_filter( 'woocommerce_get_sections_products', array( $this, 'add_products_section' ) );
+        add_filter( 'woocommerce_get_settings_products', array( $this, 'add_products_settings' ), 10, 2 );
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
     }
     
-    public function admin_notices() {
-        if ( isset( $_GET['settings-updated'] ) && $_GET['page'] === 'woo-countdown-timer' ) {
-            echo '<div class="notice notice-success is-dismissible">';
-            echo '<p>' . __( 'Countdown timer settings saved successfully!', 'woo-countdown-timer' ) . '</p>';
-            echo '</div>';
+    
+    public function enqueue_admin_assets( $hook ) {
+        if ( 'woocommerce_page_wc-settings' !== $hook ) {
+            return;
+        }
+        
+        // Only load on products tab, countdown timer section
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Reading URL parameter for conditional asset loading
+        if ( ! isset( $_GET['tab'] ) || sanitize_text_field( wp_unslash( $_GET['tab'] ) ) !== 'products' ) {
+            return;
+        }
+        
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Reading URL parameter for conditional asset loading
+        if ( ! isset( $_GET['section'] ) || sanitize_text_field( wp_unslash( $_GET['section'] ) ) !== 'countdown_timer' ) {
+            return;
+        }
+        
+        // Only enqueue files that exist
+        $admin_css_path = COUNTDOWN_TIMER_FOR_WOOCOMMERCE_PLUGIN_PATH . 'assets/css/admin.css';
+        if ( file_exists( $admin_css_path ) ) {
+            wp_enqueue_style(
+                'countdown-timer-for-woocommerce-admin-style',
+                COUNTDOWN_TIMER_FOR_WOOCOMMERCE_PLUGIN_URL . 'assets/css/admin.css',
+                array(),
+                COUNTDOWN_TIMER_FOR_WOOCOMMERCE_VERSION
+            );
+        }
+        
+        $admin_js_path = COUNTDOWN_TIMER_FOR_WOOCOMMERCE_PLUGIN_PATH . 'assets/js/admin.js';
+        if ( file_exists( $admin_js_path ) ) {
+            wp_enqueue_script(
+                'countdown-timer-for-woocommerce-admin-script',
+                COUNTDOWN_TIMER_FOR_WOOCOMMERCE_PLUGIN_URL . 'assets/js/admin.js',
+                array( 'jquery' ),
+                COUNTDOWN_TIMER_FOR_WOOCOMMERCE_VERSION,
+                true
+            );
         }
     }
     
-    public function handle_settings_save() {
-        if ( isset( $_POST['submit'] ) && isset( $_POST['woo_countdown_timer_options'] ) ) {
-            if ( ! current_user_can( 'manage_woocommerce' ) ) {
-                return;
-            }
-            
-            if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'woo_countdown_timer_settings-options' ) ) {
-                return;
-            }
-            
-            $options = $_POST['woo_countdown_timer_options'];
-            
-            // Sanitize options
-            $sanitized_options = array();
-            $sanitized_options['enabled'] = isset( $options['enabled'] ) ? 1 : 0;
-            $sanitized_options['cutoff_time'] = sanitize_text_field( $options['cutoff_time'] );
-            $sanitized_options['message_template'] = wp_kses_post( $options['message_template'] );
-            $sanitized_options['expired_message'] = wp_kses_post( $options['expired_message'] );
-            $sanitized_options['weekend_shipping'] = isset( $options['weekend_shipping'] ) ? 1 : 0;
-            
-            // Validate cutoff time format
-            if ( ! preg_match( '/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/', $sanitized_options['cutoff_time'] ) ) {
-                add_settings_error( 'woo_countdown_timer_options', 'invalid_time', __( 'Invalid time format. Please use HH:MM format.', 'woo-countdown-timer' ) );
-                return;
-            }
-            
-            update_option( 'woo_countdown_timer_options', $sanitized_options );
-            
-            wp_redirect( add_query_arg( array( 'settings-updated' => 'true' ), wp_get_referer() ) );
-            exit;
+    
+    public function add_products_section( $sections ) {
+        $sections['countdown_timer'] = __( 'Countdown Timer', 'countdown-timer-for-woocommerce' );
+        return $sections;
+    }
+    
+    public function add_products_settings( $settings, $current_section ) {
+        if ( 'countdown_timer' === $current_section ) {
+            $countdown_settings = array(
+                array(
+                    'title' => __( 'Countdown Timer Settings', 'countdown-timer-for-woocommerce' ),
+                    'type'  => 'title',
+                    'desc'  => __( 'Configure countdown timer display for same-day shipping deadlines.', 'countdown-timer-for-woocommerce' ),
+                    'id'    => 'countdown_timer_options'
+                ),
+                array(
+                    'title'    => __( 'Daily Cutoff Time', 'countdown-timer-for-woocommerce' ),
+                    'desc'     => __( 'Set the daily cutoff time for same-day shipping (24-hour format).', 'countdown-timer-for-woocommerce' ),
+                    'id'       => 'countdown_timer_cutoff_time',
+                    'type'     => 'time',
+                    'default'  => '14:00',
+                    'css'      => 'width: 120px;',
+                    'custom_attributes' => array(
+                        'step' => '60'
+                    )
+                ),
+                array(
+                    'title'    => __( 'Countdown Message', 'countdown-timer-for-woocommerce' ),
+                    'desc'     => __( 'Use {time} as a placeholder for the countdown timer. Example: "Order within {time} for same-day shipping!"', 'countdown-timer-for-woocommerce' ),
+                    'id'       => 'countdown_timer_message_template',
+                    'type'     => 'textarea',
+                    'default'  => 'Order within {time} for same-day shipping!',
+                    'css'      => 'width: 400px; height: 75px;'
+                ),
+                array(
+                    'title'   => __( 'Weekend Shipping', 'countdown-timer-for-woocommerce' ),
+                    'desc'    => __( 'Enable countdown timer on weekends', 'countdown-timer-for-woocommerce' ),
+                    'id'      => 'countdown_timer_enable_weekends',
+                    'default' => 'no',
+                    'type'    => 'checkbox',
+                    'desc_tip' => __( 'If disabled, the countdown timer will not appear on Saturdays and Sundays.', 'countdown-timer-for-woocommerce' )
+                ),
+                array(
+                    'title'    => __( 'Urgency Threshold', 'countdown-timer-for-woocommerce' ),
+                    'desc'     => __( 'When time remaining is below this threshold, the countdown will appear with urgency styling (in minutes).', 'countdown-timer-for-woocommerce' ),
+                    'id'       => 'countdown_timer_urgency_threshold',
+                    'type'     => 'number',
+                    'default'  => '60',
+                    'css'      => 'width: 80px;',
+                    'custom_attributes' => array(
+                        'min'  => '5',
+                        'max'  => '1440',
+                        'step' => '1'
+                    )
+                ),
+                array(
+                    'title'    => __( 'Very Urgent Threshold', 'countdown-timer-for-woocommerce' ),
+                    'desc'     => __( 'When time remaining is below this threshold, the countdown will appear with high urgency styling (in minutes).', 'countdown-timer-for-woocommerce' ),
+                    'id'       => 'countdown_timer_very_urgent_threshold',
+                    'type'     => 'number',
+                    'default'  => '30',
+                    'css'      => 'width: 80px;',
+                    'custom_attributes' => array(
+                        'min'  => '1',
+                        'max'  => '1439',
+                        'step' => '1'
+                    )
+                ),
+                array(
+                    'type' => 'sectionend',
+                    'id'   => 'countdown_timer_options'
+                )
+            );
+            return $countdown_settings;
         }
-    }
-    
-    public function add_product_shipping_options() {
-        global $post;
-        
-        echo '<div class="options_group">';
-        
-        woocommerce_wp_checkbox( array(
-            'id' => '_disable_countdown_timer',
-            'label' => __( 'Disable Countdown Timer', 'woo-countdown-timer' ),
-            'description' => __( 'Hide the countdown timer for this product', 'woo-countdown-timer' )
-        ) );
-        
-        woocommerce_wp_text_input( array(
-            'id' => '_custom_cutoff_time',
-            'label' => __( 'Custom Cutoff Time', 'woo-countdown-timer' ),
-            'description' => __( 'Override the global cutoff time for this product (HH:MM format)', 'woo-countdown-timer' ),
-            'type' => 'time',
-            'desc_tip' => true
-        ) );
-        
-        woocommerce_wp_textarea_input( array(
-            'id' => '_custom_countdown_message',
-            'label' => __( 'Custom Countdown Message', 'woo-countdown-timer' ),
-            'description' => __( 'Override the global countdown message for this product. Use {time} as placeholder.', 'woo-countdown-timer' ),
-            'desc_tip' => true
-        ) );
-        
-        echo '</div>';
-    }
-    
-    public function save_product_shipping_options( $post_id ) {
-        $disable_countdown = isset( $_POST['_disable_countdown_timer'] ) ? 'yes' : 'no';
-        update_post_meta( $post_id, '_disable_countdown_timer', $disable_countdown );
-        
-        if ( isset( $_POST['_custom_cutoff_time'] ) ) {
-            $custom_cutoff = sanitize_text_field( $_POST['_custom_cutoff_time'] );
-            if ( preg_match( '/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/', $custom_cutoff ) ) {
-                update_post_meta( $post_id, '_custom_cutoff_time', $custom_cutoff );
-            }
-        }
-        
-        if ( isset( $_POST['_custom_countdown_message'] ) ) {
-            $custom_message = wp_kses_post( $_POST['_custom_countdown_message'] );
-            update_post_meta( $post_id, '_custom_countdown_message', $custom_message );
-        }
-    }
-    
-    public function get_dashboard_stats() {
-        global $wpdb;
-        
-        $table_name = $wpdb->prefix . 'woo_countdown_timer_logs';
-        
-        // Get stats for the last 30 days
-        $thirty_days_ago = date( 'Y-m-d H:i:s', strtotime( '-30 days' ) );
-        
-        $stats = array();
-        
-        // Total countdown views
-        $stats['total_views'] = $wpdb->get_var( $wpdb->prepare(
-            "SELECT COUNT(*) FROM $table_name WHERE created_at >= %s",
-            $thirty_days_ago
-        ) );
-        
-        // Most popular cutoff times
-        $stats['popular_times'] = $wpdb->get_results( $wpdb->prepare(
-            "SELECT cutoff_time, COUNT(*) as count FROM $table_name WHERE created_at >= %s GROUP BY cutoff_time ORDER BY count DESC LIMIT 5",
-            $thirty_days_ago
-        ) );
-        
-        return $stats;
-    }
-    
-    public static function log_countdown_view( $product_id, $cutoff_time ) {
-        global $wpdb;
-        
-        $table_name = $wpdb->prefix . 'woo_countdown_timer_logs';
-        
-        $wpdb->insert(
-            $table_name,
-            array(
-                'product_id' => intval( $product_id ),
-                'cutoff_time' => sanitize_text_field( $cutoff_time ),
-                'created_at' => current_time( 'mysql' )
-            ),
-            array( '%d', '%s', '%s' )
-        );
+        return $settings;
     }
 }

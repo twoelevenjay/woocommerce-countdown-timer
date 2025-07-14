@@ -1,0 +1,84 @@
+# Translation of Countdown Timer for WooCommerce in Arabic
+# This file is distributed under the same license as the Countdown Timer for WooCommerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Countdown Timer for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woo-countdown-timer\n"
+"POT-Creation-Date: 2025-07-12 00:00:00+00:00\n"
+"PO-Revision-Date: 2025-07-12 00:00:00+00:00\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Generator: Poedit 3.0\n"
+
+#: includes/class-admin.php:50
+msgid "%1$s requires %2$s to be installed and active."
+msgstr "%1$s يتطلب تثبيت وتفعيل %2$s."
+
+#: includes/class-admin.php:75
+msgid "Countdown Timer"
+msgstr "مؤقت العد التنازلي"
+
+#: includes/class-admin.php:90
+msgid "Countdown Timer Settings"
+msgstr "إعدادات مؤقت العد التنازلي"
+
+#: includes/class-admin.php:91
+msgid "Configure countdown timer display for same-day shipping deadlines."
+msgstr "قم بتكوين عرض مؤقت العد التنازلي للمواعيد النهائية للشحن في نفس اليوم."
+
+#: admin/admin-page.php:30
+msgid "Daily Cutoff Time"
+msgstr "وقت الانقطاع اليومي"
+
+#: admin/admin-page.php:36
+msgid "Set the daily cutoff time for same-day shipping (24-hour format)."
+msgstr "حدد وقت الانقطاع اليومي للشحن في نفس اليوم (تنسيق 24 ساعة)."
+
+#: admin/admin-page.php:41
+msgid "Countdown Message"
+msgstr "رسالة العد التنازلي"
+
+#: admin/admin-page.php:48
+msgid "Use {time} as a placeholder for the countdown timer. Example: \"Order within {time} for same-day shipping!\""
+msgstr "استخدم {time} كعنصر نائب لمؤقت العد التنازلي. مثال: \"اطلب خلال {time} للشحن في نفس اليوم!\""
+
+#: admin/admin-page.php:53
+msgid "Weekend Shipping"
+msgstr "الشحن في نهاية الأسبوع"
+
+#: admin/admin-page.php:58
+msgid "Enable countdown timer on weekends"
+msgstr "تفعيل مؤقت العد التنازلي في عطلات نهاية الأسبوع"
+
+#: admin/admin-page.php:61
+msgid "If disabled, the countdown timer will not appear on Saturdays and Sundays."
+msgstr "إذا تم تعطيله، فلن يظهر مؤقت العد التنازلي في أيام السبت والأحد."
+
+#: admin/admin-page.php:66
+msgid "Urgency Threshold"
+msgstr "عتبة الاستعجال"
+
+#: admin/admin-page.php:72
+msgid "When time remaining is below this threshold, the countdown will appear with urgency styling (in minutes)."
+msgstr "عندما يكون الوقت المتبقي أقل من هذه العتبة، سيظهر العد التنازلي بتنسيق الاستعجال (بالدقائق)."
+
+#: admin/admin-page.php:77
+msgid "Very Urgent Threshold"
+msgstr "عتبة الاستعجال الشديد"
+
+#: admin/admin-page.php:83
+msgid "When time remaining is below this threshold, the countdown will appear with high urgency styling (in minutes)."
+msgstr "عندما يكون الوقت المتبقي أقل من هذه العتبة، سيظهر العد التنازلي بتنسيق الاستعجال الشديد (بالدقائق)."
+
+#: includes/class-countdown-display.php:120
+msgid "Cutoff time has passed"
+msgstr "انتهى وقت الانقطاع"
+
+#: default message
+msgid "Order within {time} for same-day shipping!"
+msgstr "اطلب خلال {time} للشحن في نفس اليوم!"

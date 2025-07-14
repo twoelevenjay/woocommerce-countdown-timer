@@ -1,220 +1,206 @@
-/* WooCommerce Countdown Timer Styles */
+/**
+ * Countdown Timer for WooCommerce - Frontend Styles
+ */
 
-.woo-countdown-timer {
-    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-    color: white;
-    padding: 15px 20px;
-    border-radius: 8px;
+.countdown-timer-for-woocommerce {
     margin: 15px 0;
-    text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    box-shadow: 0 4px 15px rgba(238, 90, 82, 0.3);
-    animation: pulse-glow 2s infinite alternate;
-}
-
-.woo-countdown-timer-compact {
-    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-    color: white;
-    padding: 8px 12px;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border: 2px solid #28a745;
     border-radius: 6px;
-    margin: 8px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    font-size: 0.9em;
-    box-shadow: 0 2px 8px rgba(238, 90, 82, 0.3);
+    position: relative;
+    overflow: hidden;
 }
 
-.woo-countdown-timer-shop {
-    margin-top: 10px;
+.countdown-timer-for-woocommerce::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
 }
 
 .countdown-active {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .countdown-message {
     font-size: 16px;
     font-weight: 600;
+    color: #155724;
     line-height: 1.4;
+    margin: 0;
 }
 
-.countdown-display {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1.4em;
-    font-weight: bold;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 8px 15px;
-    border-radius: 6px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-    letter-spacing: 1px;
-    min-width: 120px;
+.countdown-time {
+    font-family: 'Courier New', Monaco, monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: #28a745;
+    background: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #28a745;
     display: inline-block;
-}
-
-.countdown-hours,
-.countdown-minutes,
-.countdown-seconds {
-    display: inline-block;
-    min-width: 22px;
+    min-width: 80px;
     text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.countdown-expired {
-    padding: 10px 0;
+/* Urgency states */
+.countdown-timer-for-woocommerce.urgent {
+    border-color: #ffc107;
+    background: #fff3cd;
+    animation: pulse-urgent 2s infinite;
 }
 
-.countdown-expired .countdown-message {
-    font-size: 14px;
-    font-weight: 500;
-    opacity: 0.9;
+.countdown-timer-for-woocommerce.urgent .countdown-message {
+    color: #856404;
 }
 
-/* Compact version adjustments */
-.woo-countdown-timer-compact .countdown-message {
-    font-size: 14px;
+.countdown-timer-for-woocommerce.urgent .countdown-time {
+    color: #ffc107;
+    border-color: #ffc107;
 }
 
-.woo-countdown-timer-compact .countdown-display {
-    font-size: 1.2em;
-    padding: 5px 10px;
-    min-width: 100px;
+.countdown-timer-for-woocommerce.very-urgent {
+    border-color: #dc3545;
+    background: #f8d7da;
+    animation: pulse-very-urgent 1s infinite;
 }
 
-/* Animation */
-@keyframes pulse-glow {
-    0% {
-        box-shadow: 0 4px 15px rgba(238, 90, 82, 0.3);
+.countdown-timer-for-woocommerce.very-urgent .countdown-message {
+    color: #721c24;
+}
+
+.countdown-timer-for-woocommerce.very-urgent .countdown-time {
+    color: #dc3545;
+    border-color: #dc3545;
+    animation: blink 0.8s infinite;
+}
+
+@keyframes pulse-urgent {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
     }
-    100% {
-        box-shadow: 0 6px 20px rgba(238, 90, 82, 0.5);
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
     }
 }
 
-/* Responsive design */
+@keyframes pulse-very-urgent {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(220, 53, 69, 0);
+    }
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0.5;
+    }
+}
+
+/* Mobile responsiveness */
 @media (max-width: 768px) {
-    .woo-countdown-timer {
-        padding: 12px 15px;
+    .countdown-timer-for-woocommerce {
         margin: 10px 0;
-    }
-    
-    .countdown-active {
-        flex-direction: column;
-        gap: 8px;
+        padding: 10px 12px;
     }
     
     .countdown-message {
         font-size: 14px;
     }
     
-    .countdown-display {
-        font-size: 1.2em;
-        padding: 6px 12px;
+    .countdown-time {
+        font-size: 16px;
+        padding: 3px 6px;
+        min-width: 70px;
     }
 }
 
 @media (max-width: 480px) {
-    .woo-countdown-timer {
-        padding: 10px 12px;
-        border-radius: 6px;
+    .countdown-active {
+        flex-direction: column;
+        gap: 6px;
     }
     
     .countdown-message {
         font-size: 13px;
+        text-align: center;
     }
     
-    .countdown-display {
-        font-size: 1.1em;
-        padding: 5px 10px;
-        min-width: 90px;
+    .countdown-time {
+        font-size: 15px;
+        padding: 4px 8px;
     }
 }
 
-/* Dark theme compatibility */
-@media (prefers-color-scheme: dark) {
-    .woo-countdown-timer,
-    .woo-countdown-timer-compact {
-        background: linear-gradient(135deg, #d63638, #c62d30);
-    }
-    
-    .countdown-display {
-        background: rgba(255, 255, 255, 0.15);
-        border-color: rgba(255, 255, 255, 0.25);
-    }
-}
-
-/* High contrast mode */
+/* High contrast mode support */
 @media (prefers-contrast: high) {
-    .woo-countdown-timer,
-    .woo-countdown-timer-compact {
-        background: #d63638;
-        border: 2px solid #ffffff;
+    .countdown-timer-for-woocommerce {
+        border-width: 3px;
     }
     
-    .countdown-display {
-        background: #ffffff;
-        color: #d63638;
-        border: 2px solid #d63638;
+    .countdown-time {
+        border-width: 2px;
     }
 }
 
-/* RTL support */
-[dir="rtl"] .countdown-active {
-    direction: rtl;
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .countdown-timer-for-woocommerce::before,
+    .countdown-timer-for-woocommerce.urgent,
+    .countdown-timer-for-woocommerce.very-urgent,
+    .countdown-time {
+        animation: none;
+    }
 }
 
-[dir="rtl"] .countdown-display {
-    direction: ltr;
-    unicode-bidi: embed;
+/* Focus styles for accessibility */
+.countdown-timer-for-woocommerce:focus-within {
+    outline: 2px solid #007cba;
+    outline-offset: 2px;
 }
 
 /* Print styles */
 @media print {
-    .woo-countdown-timer,
-    .woo-countdown-timer-compact {
-        background: none !important;
-        color: #333 !important;
-        border: 2px solid #333 !important;
+    .countdown-timer-for-woocommerce {
+        background: transparent !important;
+        border: 2px solid #000 !important;
         box-shadow: none !important;
         animation: none !important;
     }
     
-    .countdown-display {
-        background: none !important;
-        color: #333 !important;
-        border: 1px solid #333 !important;
+    .countdown-time {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
     }
-}
-
-/* Accessibility improvements */
-.woo-countdown-timer:focus-within,
-.woo-countdown-timer-compact:focus-within {
-    outline: 3px solid rgba(255, 255, 255, 0.8);
-    outline-offset: 2px;
-}
-
-.countdown-display[aria-live="polite"] {
-    position: relative;
-}
-
-/* Custom properties for easy theming */
-.woo-countdown-timer {
-    --countdown-bg-start: #ff6b6b;
-    --countdown-bg-end: #ee5a52;
-    --countdown-text-color: #ffffff;
-    --countdown-shadow-color: rgba(238, 90, 82, 0.3);
-    --countdown-display-bg: rgba(255, 255, 255, 0.2);
-    --countdown-display-border: rgba(255, 255, 255, 0.3);
-    
-    background: linear-gradient(135deg, var(--countdown-bg-start), var(--countdown-bg-end));
-    color: var(--countdown-text-color);
-    box-shadow: 0 4px 15px var(--countdown-shadow-color);
-}
-
-.countdown-display {
-    background: var(--countdown-display-bg);
-    border-color: var(--countdown-display-border);
 }

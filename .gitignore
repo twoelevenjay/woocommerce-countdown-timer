@@ -1,38 +1,60 @@
-# folders and files to be ignored by git
-
-### SVN ###
-.svn
-/trunk/*
-
-### OSX ###
+# OS generated files
 .DS_Store
-.AppleDouble
-.LSOverride
-
-# Thumbnails
+.DS_Store?
 ._*
-
-# Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+ehthumbs.db
+Thumbs.db
 
-### Node.js ###
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Dependencies
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+vendor/
 
-### Ignore build artifacts ###
-/dist/
-/build/
-/public/
+# Build files
+*.zip
+*.tar.gz
 
-### Ignore the temp readme.txt file ###
-readme.txt
+# WordPress specific
+*.log
+wp-config.php
+wp-content/advanced-cache.php
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/uploads/
+wp-content/wp-cache-config.php
+wp-content/plugins/hello.php
 
-### PHP Composer (if added in the future) ###
-/vendor/
-/composer.lock
+# Development files
+.svn/
+.git/
+.gitignore
+.editorconfig
+.jshintrc
+.sass-cache/
+Gruntfile.js
+package.json
+package-lock.json
+composer.json
+composer.lock
+phpcs.xml
+phpunit.xml
+tests/
+bin/
 
-### Others ###
-/.env
+# Temporary files
+*.tmp
+*.bak
+*.cache

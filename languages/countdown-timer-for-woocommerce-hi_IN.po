@@ -1,0 +1,84 @@
+# Translation of Countdown Timer for WooCommerce in Hindi
+# This file is distributed under the same license as the Countdown Timer for WooCommerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Countdown Timer for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woo-countdown-timer\n"
+"POT-Creation-Date: 2025-07-12 00:00:00+00:00\n"
+"PO-Revision-Date: 2025-07-12 00:00:00+00:00\n"
+"Last-Translator: \n"
+"Language-Team: Hindi\n"
+"Language: hi_IN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
+
+#: includes/class-admin.php:50
+msgid "%1$s requires %2$s to be installed and active."
+msgstr "%1$s के लिए %2$s का इंस्टॉल और सक्रिय होना आवश्यक है।"
+
+#: includes/class-admin.php:75
+msgid "Countdown Timer"
+msgstr "काउंटडाउन टाइमर"
+
+#: includes/class-admin.php:90
+msgid "Countdown Timer Settings"
+msgstr "काउंटडाउन टाइमर सेटिंग्स"
+
+#: includes/class-admin.php:91
+msgid "Configure countdown timer display for same-day shipping deadlines."
+msgstr "उसी दिन शिपिंग की समय सीमा के लिए काउंटडाउन टाइमर डिस्प्ले कॉन्फ़िगर करें।"
+
+#: admin/admin-page.php:30
+msgid "Daily Cutoff Time"
+msgstr "दैनिक कटऑफ समय"
+
+#: admin/admin-page.php:36
+msgid "Set the daily cutoff time for same-day shipping (24-hour format)."
+msgstr "उसी दिन शिपिंग के लिए दैनिक कटऑफ समय सेट करें (24-घंटे का प्रारूप)।"
+
+#: admin/admin-page.php:41
+msgid "Countdown Message"
+msgstr "काउंटडाउन संदेश"
+
+#: admin/admin-page.php:48
+msgid "Use {time} as a placeholder for the countdown timer. Example: \"Order within {time} for same-day shipping!\""
+msgstr "काउंटडाउन टाइमर के लिए {time} को प्लेसहोल्डर के रूप में उपयोग करें। उदाहरण: \"उसी दिन शिपिंग के लिए {time} के भीतर ऑर्डर करें!\""
+
+#: admin/admin-page.php:53
+msgid "Weekend Shipping"
+msgstr "सप्ताहांत शिपिंग"
+
+#: admin/admin-page.php:58
+msgid "Enable countdown timer on weekends"
+msgstr "सप्ताहांत में काउंटडाउन टाइमर सक्षम करें"
+
+#: admin/admin-page.php:61
+msgid "If disabled, the countdown timer will not appear on Saturdays and Sundays."
+msgstr "यदि अक्षम है, तो काउंटडाउन टाइमर शनिवार और रविवार को दिखाई नहीं देगा।"
+
+#: admin/admin-page.php:66
+msgid "Urgency Threshold"
+msgstr "तात्कालिकता सीमा"
+
+#: admin/admin-page.php:72
+msgid "When time remaining is below this threshold, the countdown will appear with urgency styling (in minutes)."
+msgstr "जब शेष समय इस सीमा से कम हो, तो काउंटडाउन तात्कालिकता स्टाइलिंग के साथ दिखाई देगा (मिनटों में)।"
+
+#: admin/admin-page.php:77
+msgid "Very Urgent Threshold"
+msgstr "अत्यंत तात्कालिक सीमा"
+
+#: admin/admin-page.php:83
+msgid "When time remaining is below this threshold, the countdown will appear with high urgency styling (in minutes)."
+msgstr "जब शेष समय इस सीमा से कम हो, तो काउंटडाउन उच्च तात्कालिकता स्टाइलिंग के साथ दिखाई देगा (मिनटों में)।"
+
+#: includes/class-countdown-display.php:120
+msgid "Cutoff time has passed"
+msgstr "कटऑफ समय बीत चुका है"
+
+#: default message
+msgid "Order within {time} for same-day shipping!"
+msgstr "उसी दिन शिपिंग के लिए {time} के भीतर ऑर्डर करें!"

@@ -1,313 +1,187 @@
 /**
- * WooCommerce Countdown Timer JavaScript
+ * Countdown Timer for WooCommerce - Frontend JavaScript
  */
 
 (function($) {
     'use strict';
-
-    class WooCountdownTimer {
+    
+    class WooCommerceCountdownTimer {
         constructor() {
-            this.timers = [];
+            this.timer = null;
             this.init();
         }
-
+        
         init() {
-            this.findTimers();
-            this.startTimers();
             this.bindEvents();
+            this.startCountdown();
         }
-
-        findTimers() {
-            $('.countdown-active').each((index, element) => {
-                const $timer = $(element);
-                const cutoffTimestamp = parseInt($timer.data('cutoff'));
-                
-                if (cutoffTimestamp && cutoffTimestamp > 0) {
-                    this.timers.push({
-                        element: $timer,
-                        cutoffTimestamp: cutoffTimestamp,
-                        $hours: $timer.find('.countdown-hours'),
-                        $minutes: $timer.find('.countdown-minutes'),
-                        $seconds: $timer.find('.countdown-seconds'),
-                        $display: $timer.find('.countdown-display')
-                    });
+        
+        bindEvents() {
+            // Restart countdown when page becomes visible (handles tab switching)
+            $(document).on('visibilitychange', () => {
+                if (!document.hidden) {
+                    this.startCountdown();
                 }
             });
-        }
-
-        startTimers() {
-            if (this.timers.length === 0) return;
-
-            // Update immediately
-            this.updateTimers();
-
-            // Update every second
-            this.intervalId = setInterval(() => {
-                this.updateTimers();
-            }, 1000);
-        }
-
-        updateTimers() {
-            const currentTime = Math.floor(Date.now() / 1000);
-            let activeTimers = 0;
-
-            this.timers.forEach(timer => {
-                const remainingSeconds = timer.cutoffTimestamp - currentTime;
-
-                if (remainingSeconds <= 0) {
-                    this.expireTimer(timer);
-                } else {
-                    this.updateTimerDisplay(timer, remainingSeconds);
-                    activeTimers++;
-                }
-            });
-
-            // Stop interval if no active timers
-            if (activeTimers === 0 && this.intervalId) {
-                clearInterval(this.intervalId);
-                this.intervalId = null;
-            }
-        }
-
-        updateTimerDisplay(timer, remainingSeconds) {
-            const time = this.formatTime(remainingSeconds);
             
-            timer.$hours.text(time.hours);
-            timer.$minutes.text(time.minutes);
-            timer.$seconds.text(time.seconds);
-
-            // Add urgency classes
-            timer.$display.removeClass('urgent very-urgent');
-            if (remainingSeconds <= 300) { // 5 minutes
-                timer.$display.addClass('very-urgent');
-            } else if (remainingSeconds <= 1800) { // 30 minutes
-                timer.$display.addClass('urgent');
-            }
-
-            // Update aria-live for accessibility
-            timer.$display.attr('aria-live', 'polite');
-            timer.$display.attr('aria-label', `${time.hours} hours, ${time.minutes} minutes, ${time.seconds} seconds remaining`);
+            // Handle AJAX cart updates
+            $(document.body).on('updated_wc_div', () => {
+                this.startCountdown();
+            });
         }
-
+        
+        startCountdown() {
+            const $timer = $('.countdown-timer-for-woocommerce');
+            
+            if ($timer.length === 0) {
+                return;
+            }
+            
+            // Clear any existing timer
+            if (this.timer) {
+                clearInterval(this.timer);
+            }
+            
+            const cutoffTime = $timer.data('cutoff-time');
+            const enableWeekends = $timer.data('enable-weekends') === '1';
+            
+            this.timer = setInterval(() => {
+                this.updateCountdown($timer, cutoffTime, enableWeekends);
+            }, 1000);
+            
+            // Initial update
+            this.updateCountdown($timer, cutoffTime, enableWeekends);
+        }
+        
+        updateCountdown($timer, cutoffTime, enableWeekends) {
+            const now = Date.now();
+            const pageLoadTime = countdownTimerForWooCommerce.page_load_time || now;
+            const initialTimeRemaining = countdownTimerForWooCommerce.initial_time_remaining || 0;
+            
+            // Calculate how much time has passed since page load
+            const elapsedSeconds = Math.floor((now - pageLoadTime) / 1000);
+            
+            // Calculate current time remaining
+            const timeRemaining = Math.max(0, initialTimeRemaining - elapsedSeconds);
+            
+            if (timeRemaining <= 0) {
+                this.hideCountdown($timer);
+                return;
+            }
+            
+            this.updateDisplay($timer, timeRemaining);
+        }
+        
+        calculateTimeRemaining(now, cutoffTime, enableWeekends) {
+            const [hours, minutes] = cutoffTime.split(':').map(Number);
+            
+            // Create cutoff time for today
+            let cutoffDate = new Date(now);
+            cutoffDate.setHours(hours, minutes, 0, 0);
+            
+            // If cutoff has passed today, return 0 (no same-day shipping)
+            if (now >= cutoffDate) {
+                return 0;
+            }
+            
+            // If weekends are disabled and today is weekend, return 0
+            if (!enableWeekends && this.isWeekend(now)) {
+                return 0;
+            }
+            
+            return Math.floor((cutoffDate - now) / 1000);
+        }
+        
+        getNextBusinessDay(date, enableWeekends) {
+            const nextDay = new Date(date);
+            nextDay.setDate(nextDay.getDate() + 1);
+            
+            if (!enableWeekends) {
+                // Skip weekends
+                while (this.isWeekend(nextDay)) {
+                    nextDay.setDate(nextDay.getDate() + 1);
+                }
+            }
+            
+            return nextDay;
+        }
+        
+        isWeekend(date) {
+            const day = date.getDay();
+            return day === 0 || day === 6; // Sunday or Saturday
+        }
+        
+        updateDisplay($timer, timeRemaining) {
+            const formattedTime = this.formatTime(timeRemaining);
+            const $timeElement = $timer.find('.countdown-time');
+            
+            // Update time display
+            $timeElement.text(formattedTime);
+            
+            // Update urgency classes
+            this.updateUrgencyClasses($timer, timeRemaining);
+            
+            // Update ARIA live region
+            $timer.attr('aria-label', `Time remaining for same-day shipping: ${formattedTime}`);
+        }
+        
         formatTime(seconds) {
             const hours = Math.floor(seconds / 3600);
             const minutes = Math.floor((seconds % 3600) / 60);
             const secs = seconds % 60;
-
-            return {
-                hours: this.padZero(hours),
-                minutes: this.padZero(minutes),
-                seconds: this.padZero(secs)
-            };
-        }
-
-        padZero(num) {
-            return num.toString().padStart(2, '0');
-        }
-
-        expireTimer(timer) {
-            // Replace with expired message
-            const expiredMessage = wooCountdownTimer.expiredMessage || 'Order today for next business day shipping.';
-            const $parent = timer.element.parent();
             
-            $parent.html(`
-                <div class="countdown-expired">
-                    <span class="countdown-message">${expiredMessage}</span>
-                </div>
-            `);
-
-            // Add expired class to parent container
-            $parent.addClass('countdown-timer-expired');
-
-            // Log expiration event
-            this.logEvent('timer_expired', {
-                cutoff_timestamp: timer.cutoffTimestamp
-            });
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
-
-        bindEvents() {
-            // Handle page visibility changes
-            $(document).on('visibilitychange', () => {
-                if (document.hidden) {
-                    // Page is hidden, stop timers to save resources
-                    if (this.intervalId) {
-                        clearInterval(this.intervalId);
-                        this.intervalId = null;
-                    }
-                } else {
-                    // Page is visible again, restart timers
-                    this.startTimers();
-                }
-            });
-
-            // Handle window focus/blur for better performance
-            $(window).on('focus', () => {
-                if (!this.intervalId && this.timers.length > 0) {
-                    this.startTimers();
-                }
-            });
-
-            $(window).on('blur', () => {
-                // Reduce update frequency when window is not focused
-                if (this.intervalId) {
-                    clearInterval(this.intervalId);
-                    this.intervalId = setInterval(() => {
-                        this.updateTimers();
-                    }, 5000); // Update every 5 seconds instead of 1
-                }
-            });
+        
+        updateUrgencyClasses($timer, timeRemaining) {
+            const urgencyThreshold = (countdownTimerForWooCommerce.urgency_threshold || 60) * 60; // Convert to seconds
+            const veryUrgentThreshold = (countdownTimerForWooCommerce.very_urgent_threshold || 30) * 60;
+            
+            // Remove existing urgency classes
+            $timer.removeClass('urgent very-urgent');
+            
+            // Add appropriate urgency class
+            if (timeRemaining <= veryUrgentThreshold) {
+                $timer.addClass('very-urgent');
+            } else if (timeRemaining <= urgencyThreshold) {
+                $timer.addClass('urgent');
+            }
         }
-
-        logEvent(eventType, data = {}) {
-            if (!wooCountdownTimer || !wooCountdownTimer.ajaxurl) return;
-
-            $.ajax({
-                url: wooCountdownTimer.ajaxurl,
-                type: 'POST',
-                data: {
-                    action: 'log_countdown_event',
-                    event_type: eventType,
-                    event_data: JSON.stringify(data),
-                    nonce: wooCountdownTimer.nonce
-                },
-                success: function(response) {
-                    // Optional: handle success
-                },
-                error: function(xhr, status, error) {
-                    // Optional: handle error
-                }
+        
+        hideCountdown($timer) {
+            $timer.fadeOut(500, function() {
+                $(this).remove();
             });
+            
+            if (this.timer) {
+                clearInterval(this.timer);
+                this.timer = null;
+            }
         }
-
-        // Public method to refresh timers (useful for AJAX loaded content)
+        
+        // Public method to manually refresh countdown
         refresh() {
-            this.timers = [];
-            if (this.intervalId) {
-                clearInterval(this.intervalId);
-                this.intervalId = null;
-            }
-            this.init();
-        }
-
-        // Public method to manually expire all timers
-        expireAll() {
-            this.timers.forEach(timer => {
-                this.expireTimer(timer);
-            });
-            this.timers = [];
-            if (this.intervalId) {
-                clearInterval(this.intervalId);
-                this.intervalId = null;
-            }
+            this.startCountdown();
         }
     }
-
-    // Initialize when DOM is ready
+    
+    // Initialize countdown timer when DOM is ready
     $(document).ready(function() {
-        window.wooCountdownTimerInstance = new WooCountdownTimer();
-
-        // Re-initialize for dynamically loaded content
-        $(document.body).on('updated_wc_div', function() {
-            if (window.wooCountdownTimerInstance) {
-                window.wooCountdownTimerInstance.refresh();
-            }
-        });
-
-        // Handle AJAX cart updates
-        $(document.body).on('wc_fragments_refreshed', function() {
-            if (window.wooCountdownTimerInstance) {
-                window.wooCountdownTimerInstance.refresh();
+        // Initialize countdown timer
+        window.countdownTimerForWooCommerceInstance = new WooCommerceCountdownTimer();
+        
+        // Handle AJAX requests (for dynamic content updates)
+        $(document).ajaxComplete(function(event, xhr, settings) {
+            // Reinitialize if new content contains countdown timer
+            if ($('.countdown-timer-for-woocommerce').length > 0) {
+                setTimeout(() => {
+                    window.countdownTimerForWooCommerceInstance.refresh();
+                }, 100);
             }
         });
     });
-
-    // Utility functions for external use
-    window.WooCountdownTimerUtils = {
-        formatTimeRemaining: function(seconds) {
-            const hours = Math.floor(seconds / 3600);
-            const minutes = Math.floor((seconds % 3600) / 60);
-            const secs = seconds % 60;
-
-            const parts = [];
-            
-            if (hours > 0) {
-                parts.push(hours + (hours === 1 ? ' hour' : ' hours'));
-            }
-            if (minutes > 0) {
-                parts.push(minutes + (minutes === 1 ? ' minute' : ' minutes'));
-            }
-            if (secs > 0 || parts.length === 0) {
-                parts.push(secs + (secs === 1 ? ' second' : ' seconds'));
-            }
-
-            return parts.join(', ');
-        },
-
-        isBusinessHours: function(timestamp) {
-            const date = new Date(timestamp * 1000);
-            const day = date.getDay(); // 0 = Sunday, 6 = Saturday
-            const hour = date.getHours();
-
-            // Monday to Friday, 9 AM to 6 PM
-            return (day >= 1 && day <= 5) && (hour >= 9 && hour < 18);
-        },
-
-        getNextBusinessDay: function(timestamp) {
-            const date = new Date(timestamp * 1000);
-            const day = date.getDay();
-            
-            let daysToAdd = 1;
-            
-            if (day === 5) { // Friday
-                daysToAdd = 3; // Skip to Monday
-            } else if (day === 6) { // Saturday
-                daysToAdd = 2; // Skip to Monday
-            }
-            
-            date.setDate(date.getDate() + daysToAdd);
-            return Math.floor(date.getTime() / 1000);
-        }
-    };
-
+    
+    // Expose timer instance globally for debugging
+    window.WooCommerceCountdownTimer = WooCommerceCountdownTimer;
+    
 })(jQuery);
-
-// CSS for dynamic urgency classes
-const urgencyStyles = `
-    .countdown-display.urgent {
-        animation: pulse-urgent 1.5s infinite;
-        background: rgba(255, 193, 7, 0.3) !important;
-        border-color: rgba(255, 193, 7, 0.5) !important;
-    }
-    
-    .countdown-display.very-urgent {
-        animation: pulse-very-urgent 1s infinite;
-        background: rgba(220, 53, 69, 0.3) !important;
-        border-color: rgba(220, 53, 69, 0.5) !important;
-    }
-    
-    @keyframes pulse-urgent {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-    }
-    
-    @keyframes pulse-very-urgent {
-        0%, 100% { transform: scale(1); }
-        25% { transform: scale(1.1); }
-        75% { transform: scale(1.05); }
-    }
-    
-    .countdown-timer-expired {
-        opacity: 0.8;
-        animation: fadeIn 0.5s ease-in;
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 0.8; }
-    }
-`;
-
-// Inject urgency styles
-const styleSheet = document.createElement('style');
-styleSheet.textContent = urgencyStyles;
-document.head.appendChild(styleSheet);

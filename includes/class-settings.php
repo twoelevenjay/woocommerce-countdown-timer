@@ -2,112 +2,136 @@
 /**
  * Settings management class
  *
- * @package WooCountdownTimer
+ * @package Countdown_Timer_For_WooCommerce
  */
 
+// Prevent direct access
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class WooCountdownTimer_Settings {
+class Countdown_Timer_For_WooCommerce_Settings {
     
-    private $options;
+    private static $instance = null;
+    private $settings = array();
+    
+    public static function instance() {
+        if ( is_null( self::$instance ) ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
     
     public function __construct() {
-        $this->options = get_option( 'woo_countdown_timer_options', array() );
-        add_action( 'admin_init', array( $this, 'register_settings' ) );
+        $this->load_settings();
     }
     
-    public function register_settings() {
-        register_setting( 'woo_countdown_timer_settings', 'woo_countdown_timer_options' );
-        
-        add_settings_section(
-            'woo_countdown_timer_general',
-            __( 'General Settings', 'woo-countdown-timer' ),
-            array( $this, 'general_section_callback' ),
-            'woo_countdown_timer_settings'
+    private function load_settings() {
+        $defaults = array(
+            'cutoff_time' => '14:00',
+            'message_template' => 'Order within {time} for same-day shipping!',
+            'enable_weekends' => false,
+            'urgency_threshold' => 60,
+            'very_urgent_threshold' => 30
         );
         
-        add_settings_field(
-            'enabled',
-            __( 'Enable Countdown Timer', 'woo-countdown-timer' ),
-            array( $this, 'enabled_callback' ),
-            'woo_countdown_timer_settings',
-            'woo_countdown_timer_general'
+        // Load from WooCommerce settings format (primary)
+        $wc_settings = array(
+            'cutoff_time' => get_option( 'countdown_timer_cutoff_time', '14:00' ),
+            'message_template' => get_option( 'countdown_timer_message_template', 'Order within {time} for same-day shipping!' ),
+            'enable_weekends' => get_option( 'countdown_timer_enable_weekends', 'no' ) === 'yes',
+            'urgency_threshold' => absint( get_option( 'countdown_timer_urgency_threshold', 60 ) ),
+            'very_urgent_threshold' => absint( get_option( 'countdown_timer_very_urgent_threshold', 30 ) )
         );
         
-        add_settings_field(
-            'cutoff_time',
-            __( 'Same-Day Shipping Cutoff Time', 'woo-countdown-timer' ),
-            array( $this, 'cutoff_time_callback' ),
-            'woo_countdown_timer_settings',
-            'woo_countdown_timer_general'
-        );
+        // Check for legacy settings as fallback
+        $legacy_settings = get_option( 'countdown_timer_for_woocommerce_settings', array() );
         
-        add_settings_field(
-            'message_template',
-            __( 'Countdown Message Template', 'woo-countdown-timer' ),
-            array( $this, 'message_template_callback' ),
-            'woo_countdown_timer_settings',
-            'woo_countdown_timer_general'
-        );
+        // Use WooCommerce settings if they exist, otherwise use legacy, otherwise use defaults
+        if ( ! empty( $wc_settings['cutoff_time'] ) && $wc_settings['cutoff_time'] !== '14:00' ) {
+            // WooCommerce settings exist and have been customized
+            $this->settings = wp_parse_args( $wc_settings, $defaults );
+        } elseif ( ! empty( $legacy_settings ) ) {
+            // Fall back to legacy settings
+            $this->settings = wp_parse_args( $legacy_settings, $defaults );
+        } else {
+            // Use defaults with WooCommerce format
+            $this->settings = wp_parse_args( $wc_settings, $defaults );
+        }
+    }
+    
+    
+    public function sanitize_settings( $input ) {
+        $sanitized = array();
         
-        add_settings_field(
-            'expired_message',
-            __( 'Message After Cutoff', 'woo-countdown-timer' ),
-            array( $this, 'expired_message_callback' ),
-            'woo_countdown_timer_settings',
-            'woo_countdown_timer_general'
-        );
+        // Validate cutoff time format (HH:MM)
+        if ( isset( $input['cutoff_time'] ) ) {
+            $time = sanitize_text_field( $input['cutoff_time'] );
+            if ( preg_match( '/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/', $time ) ) {
+                $sanitized['cutoff_time'] = $time;
+            } else {
+                $sanitized['cutoff_time'] = '14:00'; // Default fallback
+            }
+        }
         
-        add_settings_field(
-            'weekend_shipping',
-            __( 'Weekend Shipping Available', 'woo-countdown-timer' ),
-            array( $this, 'weekend_shipping_callback' ),
-            'woo_countdown_timer_settings',
-            'woo_countdown_timer_general'
-        );
+        // Validate message template contains {time} placeholder
+        if ( isset( $input['message_template'] ) ) {
+            $message = sanitize_textarea_field( $input['message_template'] );
+            if ( ! empty( $message ) && strpos( $message, '{time}' ) !== false ) {
+                $sanitized['message_template'] = $message;
+            } else {
+                $sanitized['message_template'] = 'Order within {time} for same-day shipping!';
+            }
+        }
+        
+        if ( isset( $input['enable_weekends'] ) ) {
+            $sanitized['enable_weekends'] = (bool) $input['enable_weekends'];
+        }
+        
+        // Validate urgency thresholds with constraints
+        $urgency_threshold = isset( $input['urgency_threshold'] ) ? absint( $input['urgency_threshold'] ) : 60;
+        $very_urgent_threshold = isset( $input['very_urgent_threshold'] ) ? absint( $input['very_urgent_threshold'] ) : 30;
+        
+        // Ensure thresholds are within reasonable bounds
+        $urgency_threshold = max( 5, min( 1440, $urgency_threshold ) ); // 5 minutes to 24 hours
+        $very_urgent_threshold = max( 1, min( $urgency_threshold - 1, $very_urgent_threshold ) ); // Must be less than urgency threshold
+        
+        $sanitized['urgency_threshold'] = $urgency_threshold;
+        $sanitized['very_urgent_threshold'] = $very_urgent_threshold;
+        
+        return $sanitized;
     }
     
-    public function general_section_callback() {
-        echo '<p>' . __( 'Configure the countdown timer settings for same-day shipping.', 'woo-countdown-timer' ) . '</p>';
+    public function get_setting( $key, $default = null ) {
+        return isset( $this->settings[ $key ] ) ? $this->settings[ $key ] : $default;
     }
     
-    public function enabled_callback() {
-        $enabled = isset( $this->options['enabled'] ) ? $this->options['enabled'] : true;
-        echo '<input type="checkbox" id="enabled" name="woo_countdown_timer_options[enabled]" value="1"' . checked( 1, $enabled, false ) . ' />';
-        echo '<label for="enabled">' . __( 'Enable the countdown timer display', 'woo-countdown-timer' ) . '</label>';
+    public function get_all_settings() {
+        return $this->settings;
     }
     
-    public function cutoff_time_callback() {
-        $cutoff_time = isset( $this->options['cutoff_time'] ) ? $this->options['cutoff_time'] : '14:00';
-        echo '<input type="time" id="cutoff_time" name="woo_countdown_timer_options[cutoff_time]" value="' . esc_attr( $cutoff_time ) . '" />';
-        echo '<p class="description">' . __( 'Orders placed before this time will qualify for same-day shipping.', 'woo-countdown-timer' ) . '</p>';
+    public function update_setting( $key, $value ) {
+        $this->settings[ $key ] = $value;
+        update_option( 'countdown_timer_for_woocommerce_settings', $this->settings );
     }
     
-    public function message_template_callback() {
-        $message = isset( $this->options['message_template'] ) ? $this->options['message_template'] : 'Order within {time} for same-day shipping!';
-        echo '<input type="text" id="message_template" name="woo_countdown_timer_options[message_template]" value="' . esc_attr( $message ) . '" class="regular-text" />';
-        echo '<p class="description">' . __( 'Use {time} as placeholder for the countdown timer. HTML allowed.', 'woo-countdown-timer' ) . '</p>';
+    public function get_cutoff_time() {
+        return $this->get_setting( 'cutoff_time', '14:00' );
     }
     
-    public function expired_message_callback() {
-        $message = isset( $this->options['expired_message'] ) ? $this->options['expired_message'] : 'Order today for next business day shipping.';
-        echo '<input type="text" id="expired_message" name="woo_countdown_timer_options[expired_message]" value="' . esc_attr( $message ) . '" class="regular-text" />';
-        echo '<p class="description">' . __( 'Message displayed after the cutoff time has passed.', 'woo-countdown-timer' ) . '</p>';
+    public function get_message_template() {
+        return $this->get_setting( 'message_template', 'Order within {time} for same-day shipping!' );
     }
     
-    public function weekend_shipping_callback() {
-        $weekend_shipping = isset( $this->options['weekend_shipping'] ) ? $this->options['weekend_shipping'] : false;
-        echo '<input type="checkbox" id="weekend_shipping" name="woo_countdown_timer_options[weekend_shipping]" value="1"' . checked( 1, $weekend_shipping, false ) . ' />';
-        echo '<label for="weekend_shipping">' . __( 'Enable same-day shipping on weekends', 'woo-countdown-timer' ) . '</label>';
+    public function is_weekends_enabled() {
+        return $this->get_setting( 'enable_weekends', false );
     }
     
-    public function get_option( $key, $default = '' ) {
-        return isset( $this->options[ $key ] ) ? $this->options[ $key ] : $default;
+    public function get_urgency_threshold() {
+        return $this->get_setting( 'urgency_threshold', 60 );
     }
     
-    public function get_all_options() {
-        return $this->options;
+    public function get_very_urgent_threshold() {
+        return $this->get_setting( 'very_urgent_threshold', 30 );
     }
 }

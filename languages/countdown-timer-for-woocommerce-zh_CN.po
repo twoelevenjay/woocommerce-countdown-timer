@@ -1,0 +1,84 @@
+# Translation of Countdown Timer for WooCommerce in Chinese (China)
+# This file is distributed under the same license as the Countdown Timer for WooCommerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Countdown Timer for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woo-countdown-timer\n"
+"POT-Creation-Date: 2025-07-12 00:00:00+00:00\n"
+"PO-Revision-Date: 2025-07-12 00:00:00+00:00\n"
+"Last-Translator: \n"
+"Language-Team: Chinese (China)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0\n"
+
+#: includes/class-admin.php:50
+msgid "%1$s requires %2$s to be installed and active."
+msgstr "%1$s 需要安装并激活 %2$s。"
+
+#: includes/class-admin.php:75
+msgid "Countdown Timer"
+msgstr "倒计时器"
+
+#: includes/class-admin.php:90
+msgid "Countdown Timer Settings"
+msgstr "倒计时器设置"
+
+#: includes/class-admin.php:91
+msgid "Configure countdown timer display for same-day shipping deadlines."
+msgstr "配置当日发货截止时间的倒计时显示。"
+
+#: admin/admin-page.php:30
+msgid "Daily Cutoff Time"
+msgstr "每日截止时间"
+
+#: admin/admin-page.php:36
+msgid "Set the daily cutoff time for same-day shipping (24-hour format)."
+msgstr "设置当日发货的每日截止时间（24小时制）。"
+
+#: admin/admin-page.php:41
+msgid "Countdown Message"
+msgstr "倒计时消息"
+
+#: admin/admin-page.php:48
+msgid "Use {time} as a placeholder for the countdown timer. Example: \"Order within {time} for same-day shipping!\""
+msgstr "使用 {time} 作为倒计时的占位符。示例："在 {time} 内下单，当日发货！""
+
+#: admin/admin-page.php:53
+msgid "Weekend Shipping"
+msgstr "周末发货"
+
+#: admin/admin-page.php:58
+msgid "Enable countdown timer on weekends"
+msgstr "在周末启用倒计时器"
+
+#: admin/admin-page.php:61
+msgid "If disabled, the countdown timer will not appear on Saturdays and Sundays."
+msgstr "如果禁用，倒计时器将不会在周六和周日显示。"
+
+#: admin/admin-page.php:66
+msgid "Urgency Threshold"
+msgstr "紧急阈值"
+
+#: admin/admin-page.php:72
+msgid "When time remaining is below this threshold, the countdown will appear with urgency styling (in minutes)."
+msgstr "当剩余时间低于此阈值时，倒计时将以紧急样式显示（以分钟为单位）。"
+
+#: admin/admin-page.php:77
+msgid "Very Urgent Threshold"
+msgstr "非常紧急阈值"
+
+#: admin/admin-page.php:83
+msgid "When time remaining is below this threshold, the countdown will appear with high urgency styling (in minutes)."
+msgstr "当剩余时间低于此阈值时，倒计时将以高度紧急样式显示（以分钟为单位）。"
+
+#: includes/class-countdown-display.php:120
+msgid "Cutoff time has passed"
+msgstr "截止时间已过"
+
+#: default message
+msgid "Order within {time} for same-day shipping!"
+msgstr "在 {time} 内下单，当日发货！"

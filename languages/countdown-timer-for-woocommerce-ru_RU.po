@@ -1,0 +1,84 @@
+# Translation of Countdown Timer for WooCommerce in Russian
+# This file is distributed under the same license as the Countdown Timer for WooCommerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Countdown Timer for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woo-countdown-timer\n"
+"POT-Creation-Date: 2025-07-12 00:00:00+00:00\n"
+"PO-Revision-Date: 2025-07-12 00:00:00+00:00\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.0\n"
+
+#: includes/class-admin.php:50
+msgid "%1$s requires %2$s to be installed and active."
+msgstr "%1$s требует установки и активации %2$s."
+
+#: includes/class-admin.php:75
+msgid "Countdown Timer"
+msgstr "Таймер обратного отсчета"
+
+#: includes/class-admin.php:90
+msgid "Countdown Timer Settings"
+msgstr "Настройки таймера обратного отсчета"
+
+#: includes/class-admin.php:91
+msgid "Configure countdown timer display for same-day shipping deadlines."
+msgstr "Настройте отображение таймера обратного отсчета для сроков доставки в тот же день."
+
+#: admin/admin-page.php:30
+msgid "Daily Cutoff Time"
+msgstr "Ежедневное время отсечки"
+
+#: admin/admin-page.php:36
+msgid "Set the daily cutoff time for same-day shipping (24-hour format)."
+msgstr "Установите ежедневное время отсечки для доставки в тот же день (24-часовой формат)."
+
+#: admin/admin-page.php:41
+msgid "Countdown Message"
+msgstr "Сообщение обратного отсчета"
+
+#: admin/admin-page.php:48
+msgid "Use {time} as a placeholder for the countdown timer. Example: \"Order within {time} for same-day shipping!\""
+msgstr "Используйте {time} в качестве заполнителя для таймера. Пример: \"Закажите в течение {time} для доставки в тот же день!\""
+
+#: admin/admin-page.php:53
+msgid "Weekend Shipping"
+msgstr "Доставка в выходные"
+
+#: admin/admin-page.php:58
+msgid "Enable countdown timer on weekends"
+msgstr "Включить таймер обратного отсчета в выходные дни"
+
+#: admin/admin-page.php:61
+msgid "If disabled, the countdown timer will not appear on Saturdays and Sundays."
+msgstr "Если отключено, таймер обратного отсчета не будет отображаться по субботам и воскресеньям."
+
+#: admin/admin-page.php:66
+msgid "Urgency Threshold"
+msgstr "Порог срочности"
+
+#: admin/admin-page.php:72
+msgid "When time remaining is below this threshold, the countdown will appear with urgency styling (in minutes)."
+msgstr "Когда оставшееся время ниже этого порога, обратный отсчет будет отображаться со стилем срочности (в минутах)."
+
+#: admin/admin-page.php:77
+msgid "Very Urgent Threshold"
+msgstr "Порог высокой срочности"
+
+#: admin/admin-page.php:83
+msgid "When time remaining is below this threshold, the countdown will appear with high urgency styling (in minutes)."
+msgstr "Когда оставшееся время ниже этого порога, обратный отсчет будет отображаться со стилем высокой срочности (в минутах)."
+
+#: includes/class-countdown-display.php:120
+msgid "Cutoff time has passed"
+msgstr "Время отсечки прошло"
+
+#: default message
+msgid "Order within {time} for same-day shipping!"
+msgstr "Закажите в течение {time} для доставки в тот же день!"
