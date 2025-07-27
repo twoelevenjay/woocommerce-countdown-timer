@@ -204,3 +204,45 @@
         color: #000 !important;
     }
 }
+
+/* Admin styles */
+.countdown-timer-admin-page input[type="text"],
+.countdown-timer-admin-page input[type="time"],
+.countdown-timer-admin-page textarea,
+.countdown-timer-admin-page select {
+    background-color: #f8f9fa;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    transition: all 0.2s ease;
+}
+
+.countdown-timer-admin-page input[type="text"]:focus,
+.countdown-timer-admin-page input[type="time"]:focus,
+.countdown-timer-admin-page textarea:focus,
+.countdown-timer-admin-page select:focus {
+    background-color: #fff;
+    border-color: #007cba;
+    box-shadow: 0 0 0 1px #007cba;
+    outline: 2px solid transparent;
+}
+
+/* Dark mode support for admin */
+@media (prefers-color-scheme: dark) {
+    .countdown-timer-admin-page input[type="text"],
+    .countdown-timer-admin-page input[type="time"],
+    .countdown-timer-admin-page textarea,
+    .countdown-timer-admin-page select {
+        background-color: #2c3338;
+        color: #fff;
+        border-color: #50575e;
+    }
+    
+    .countdown-timer-admin-page input[type="text"]:focus,
+    .countdown-timer-admin-page input[type="time"]:focus,
+    .countdown-timer-admin-page textarea:focus,
+    .countdown-timer-admin-page select:focus {
+        background-color: #1d2327;
+        border-color: #2271b1;
+        box-shadow: 0 0 0 1px #2271b1;
+    }
+}

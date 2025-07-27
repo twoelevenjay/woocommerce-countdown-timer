@@ -14,7 +14,7 @@ $admin = new WooCountdownTimer_Admin();
 $stats = $admin->get_dashboard_stats();
 ?>
 
-<div class="wrap">
+<div class="wrap countdown-timer-admin-page">
     <h1><?php _e( 'WooCommerce Countdown Timer', 'woo-countdown-timer' ); ?></h1>
     
     <div class="woo-countdown-admin-container">
