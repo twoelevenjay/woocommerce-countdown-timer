@@ -22,8 +22,8 @@ delete_option( 'countdown_timer_very_urgent_threshold' );
 
 // For multisite installations
 if ( is_multisite() ) {
-    $blog_ids = get_sites( array( 'fields' => 'ids' ) );
-    foreach ( $blog_ids as $blog_id ) {
+    $countdown_timer_blog_ids = get_sites( array( 'fields' => 'ids' ) );
+    foreach ( $countdown_timer_blog_ids as $blog_id ) {
         switch_to_blog( $blog_id );
         delete_option( 'countdown_timer_for_woocommerce_settings' );
         delete_option( 'countdown_timer_cutoff_time' );

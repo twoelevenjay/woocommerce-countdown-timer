@@ -26,8 +26,14 @@ README.md
 CHANGELOG.md
 CONTRIBUTING.md
 deploy.sh
+DEPLOYMENT.md
 .DS_Store
 Thumbs.db
+
+# WordPress.org directory assets (uploaded via SVN, not in plugin zip)
+assets/banner-772x250.png
+assets/icon-256x256.png
+assets/screenshot-1.png
 *.log
 *.tmp
 *.zip

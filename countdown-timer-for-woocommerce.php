@@ -11,10 +11,11 @@
  * Text Domain: countdown-timer-for-woocommerce
  * Domain Path: /languages
  * Requires at least: 5.0
- * Tested up to: 6.8
+ * Tested up to: 6.9
  * Requires PHP: 7.4
+ * Requires Plugins: woocommerce
  * WC requires at least: 5.0
- * WC tested up to: 9.9.5
+ * WC tested up to: 10.5
  */
 
 // Prevent direct access
