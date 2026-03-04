@@ -1,4 +1,4 @@
-=== Countdown Timer for WooCommerce ===
+=== 211J Countdown Timer for WooCommerce ===
 Contributors: twoelevenjay
 Tags: woocommerce, countdown, timer, shipping, urgency
 Requires at least: 5.0
@@ -12,7 +12,7 @@ A countdown timer for WooCommerce that shows sentence-format messages like "Orde
 
 == Description ==
 
-Countdown Timer for WooCommerce adds a dynamic countdown timer to your WooCommerce product pages that encourages customers to place orders before your same-day shipping cutoff time.
+211J Countdown Timer for WooCommerce adds a dynamic countdown timer to your WooCommerce product pages that encourages customers to place orders before your same-day shipping cutoff time.
 
 The timer displays in a natural sentence format — "Order within 02:34:15 for same-day shipping!" — making it easy for customers to understand exactly how long they have left.
 
@@ -29,7 +29,7 @@ The timer displays in a natural sentence format — "Order within 02:34:15 for s
 
 == Installation ==
 
-1. Upload the `countdown-timer-for-woocommerce` folder to `/wp-content/plugins/`.
+1. Upload the `211j-countdown-timer-woocommerce` folder to `/wp-content/plugins/`.
 2. Activate the plugin through the **Plugins** screen in WordPress.
 3. Go to **WooCommerce > Settings > Products > Countdown Timer** to configure the plugin.
 4. Set your cutoff time and customize your message.

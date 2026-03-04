@@ -207,7 +207,7 @@ class Countdown_Timer_For_WooCommerce_Display {
         $time_remaining = $this->get_time_remaining();
         
         if ( $time_remaining <= 0 ) {
-            wp_send_json_error( array( 'message' => esc_html__( 'Cutoff time has passed', 'countdown-timer-for-woocommerce' ) ) );
+            wp_send_json_error( array( 'message' => esc_html__( 'Cutoff time has passed', '211j-countdown-timer-woocommerce' ) ) );
         }
         
         $response = array(

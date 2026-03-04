@@ -11,7 +11,7 @@
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="countdown-timer-for-woocommerce" />
+			<property name="text_domain" type="array" value="211j-countdown-timer-woocommerce" />
 		</properties>
 	</rule>
 

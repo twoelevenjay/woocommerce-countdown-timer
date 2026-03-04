@@ -1,4 +1,4 @@
-# Deployment Guide for Countdown Timer for WooCommerce
+# Deployment Guide for 211J Countdown Timer for WooCommerce
 
 This guide explains how to deploy the plugin to WordPress.org using the Git-SVN workflow.
 
@@ -45,7 +45,7 @@ This guide explains how to deploy the plugin to WordPress.org using the Git-SVN 
 ### Automatic Deployment (Recommended)
 
 1. **Update Version Number**
-   - Edit `countdown-timer-for-woocommerce.php`
+   - Edit `211j-countdown-timer-woocommerce.php`
    - Update the `Version:` header
    - Update version in `readme.txt` (both header and changelog)
 
@@ -72,7 +72,7 @@ This guide explains how to deploy the plugin to WordPress.org using the Git-SVN 
 
 1. **Clone SVN Repository**
    ```bash
-   svn co https://plugins.svn.wordpress.org/countdown-timer-for-woocommerce svn-repo
+   svn co https://plugins.svn.wordpress.org/211j-countdown-timer-woocommerce svn-repo
    ```
 
 2. **Copy Files to Trunk**
@@ -165,5 +165,5 @@ git push origin :refs/tags/vX.X.X
 
 ## Support
 
-- WordPress.org Forums: https://wordpress.org/support/plugin/countdown-timer-for-woocommerce/
+- WordPress.org Forums: https://wordpress.org/support/plugin/211j-countdown-timer-woocommerce/
 - GitHub Issues: https://github.com/twoelevenjay/woocommerce-countdown-timer/issues

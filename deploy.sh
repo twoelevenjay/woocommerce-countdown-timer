@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Countdown Timer for WooCommerce - WordPress.org Deployment Script
+# 211J Countdown Timer for WooCommerce - WordPress.org Deployment Script
 # This script handles the Git to SVN deployment process
 
 set -e
 
 # Configuration
-PLUGIN_SLUG="countdown-timer-for-woocommerce"
+PLUGIN_SLUG="211j-countdown-timer-woocommerce"
 GITHUB_REPO="twoelevenjay/woocommerce-countdown-timer"
 SVN_URL="https://plugins.svn.wordpress.org/${PLUGIN_SLUG}"
 TEMP_DIR="/tmp/${PLUGIN_SLUG}-deploy"
@@ -34,7 +34,7 @@ if ! git diff-index --quiet HEAD --; then
 fi
 
 # Get version from main plugin file
-VERSION=$(grep "Version:" countdown-timer-for-woocommerce.php | awk -F' ' '{print $NF}' | tr -d '\r')
+VERSION=$(grep "Version:" 211j-countdown-timer-woocommerce.php | awk -F' ' '{print $NF}' | tr -d '\r')
 echo -e "${YELLOW}Deploying version: ${VERSION}${NC}"
 
 # Check if tag exists

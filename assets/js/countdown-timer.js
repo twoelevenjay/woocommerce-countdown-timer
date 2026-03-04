@@ -1,5 +1,5 @@
 /**
- * Countdown Timer for WooCommerce - Frontend JavaScript
+ * 211J Countdown Timer for WooCommerce - Frontend JavaScript
  */
 
 (function($) {

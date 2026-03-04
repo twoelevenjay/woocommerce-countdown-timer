@@ -72,7 +72,7 @@ class Countdown_Timer_For_WooCommerce_Admin {
     
     
     public function add_products_section( $sections ) {
-        $sections['countdown_timer'] = __( 'Countdown Timer', 'countdown-timer-for-woocommerce' );
+        $sections['countdown_timer'] = __( 'Countdown Timer', '211j-countdown-timer-woocommerce' );
         return $sections;
     }
     
@@ -80,14 +80,14 @@ class Countdown_Timer_For_WooCommerce_Admin {
         if ( 'countdown_timer' === $current_section ) {
             $countdown_settings = array(
                 array(
-                    'title' => __( 'Countdown Timer Settings', 'countdown-timer-for-woocommerce' ),
+                    'title' => __( 'Countdown Timer Settings', '211j-countdown-timer-woocommerce' ),
                     'type'  => 'title',
-                    'desc'  => __( 'Configure countdown timer display for same-day shipping deadlines.', 'countdown-timer-for-woocommerce' ),
+                    'desc'  => __( 'Configure countdown timer display for same-day shipping deadlines.', '211j-countdown-timer-woocommerce' ),
                     'id'    => 'countdown_timer_options'
                 ),
                 array(
-                    'title'    => __( 'Daily Cutoff Time', 'countdown-timer-for-woocommerce' ),
-                    'desc'     => __( 'Set the daily cutoff time for same-day shipping (24-hour format).', 'countdown-timer-for-woocommerce' ),
+                    'title'    => __( 'Daily Cutoff Time', '211j-countdown-timer-woocommerce' ),
+                    'desc'     => __( 'Set the daily cutoff time for same-day shipping (24-hour format).', '211j-countdown-timer-woocommerce' ),
                     'id'       => 'countdown_timer_cutoff_time',
                     'type'     => 'time',
                     'default'  => '14:00',
@@ -97,24 +97,24 @@ class Countdown_Timer_For_WooCommerce_Admin {
                     )
                 ),
                 array(
-                    'title'    => __( 'Countdown Message', 'countdown-timer-for-woocommerce' ),
-                    'desc'     => __( 'Use {time} as a placeholder for the countdown timer. Example: "Order within {time} for same-day shipping!"', 'countdown-timer-for-woocommerce' ),
+                    'title'    => __( 'Countdown Message', '211j-countdown-timer-woocommerce' ),
+                    'desc'     => __( 'Use {time} as a placeholder for the countdown timer. Example: "Order within {time} for same-day shipping!"', '211j-countdown-timer-woocommerce' ),
                     'id'       => 'countdown_timer_message_template',
                     'type'     => 'textarea',
                     'default'  => 'Order within {time} for same-day shipping!',
                     'css'      => 'width: 400px; height: 75px;'
                 ),
                 array(
-                    'title'   => __( 'Weekend Shipping', 'countdown-timer-for-woocommerce' ),
-                    'desc'    => __( 'Enable countdown timer on weekends', 'countdown-timer-for-woocommerce' ),
+                    'title'   => __( 'Weekend Shipping', '211j-countdown-timer-woocommerce' ),
+                    'desc'    => __( 'Enable countdown timer on weekends', '211j-countdown-timer-woocommerce' ),
                     'id'      => 'countdown_timer_enable_weekends',
                     'default' => 'no',
                     'type'    => 'checkbox',
-                    'desc_tip' => __( 'If disabled, the countdown timer will not appear on Saturdays and Sundays.', 'countdown-timer-for-woocommerce' )
+                    'desc_tip' => __( 'If disabled, the countdown timer will not appear on Saturdays and Sundays.', '211j-countdown-timer-woocommerce' )
                 ),
                 array(
-                    'title'    => __( 'Urgency Threshold', 'countdown-timer-for-woocommerce' ),
-                    'desc'     => __( 'When time remaining is below this threshold, the countdown will appear with urgency styling (in minutes).', 'countdown-timer-for-woocommerce' ),
+                    'title'    => __( 'Urgency Threshold', '211j-countdown-timer-woocommerce' ),
+                    'desc'     => __( 'When time remaining is below this threshold, the countdown will appear with urgency styling (in minutes).', '211j-countdown-timer-woocommerce' ),
                     'id'       => 'countdown_timer_urgency_threshold',
                     'type'     => 'number',
                     'default'  => '60',
@@ -126,8 +126,8 @@ class Countdown_Timer_For_WooCommerce_Admin {
                     )
                 ),
                 array(
-                    'title'    => __( 'Very Urgent Threshold', 'countdown-timer-for-woocommerce' ),
-                    'desc'     => __( 'When time remaining is below this threshold, the countdown will appear with high urgency styling (in minutes).', 'countdown-timer-for-woocommerce' ),
+                    'title'    => __( 'Very Urgent Threshold', '211j-countdown-timer-woocommerce' ),
+                    'desc'     => __( 'When time remaining is below this threshold, the countdown will appear with high urgency styling (in minutes).', '211j-countdown-timer-woocommerce' ),
                     'id'       => 'countdown_timer_very_urgent_threshold',
                     'type'     => 'number',
                     'default'  => '30',

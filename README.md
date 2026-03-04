@@ -1,10 +1,10 @@
-# Countdown Timer for WooCommerce
+# 211J Countdown Timer for WooCommerce
 
 A professional countdown timer for WooCommerce that displays sentence-format messages like "Order within 02:34:15 for same-day shipping!" to encourage customers to order before cutoff time.
 
 ## Description
 
-Countdown Timer for WooCommerce adds a dynamic countdown timer to your WooCommerce product pages that encourages customers to place orders before your same-day shipping cutoff time. This plugin helps increase urgency and can boost conversion rates by clearly communicating shipping deadlines in an easy-to-understand sentence format.
+211J Countdown Timer for WooCommerce adds a dynamic countdown timer to your WooCommerce product pages that encourages customers to place orders before your same-day shipping cutoff time. This plugin helps increase urgency and can boost conversion rates by clearly communicating shipping deadlines in an easy-to-understand sentence format.
 
 ## Features
 
@@ -21,7 +21,7 @@ Countdown Timer for WooCommerce adds a dynamic countdown timer to your WooCommer
 
 ## Installation
 
-1. Upload the plugin files to `/wp-content/plugins/countdown-timer-for-woocommerce/`
+1. Upload the plugin files to `/wp-content/plugins/211j-countdown-timer-woocommerce/`
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Go to WooCommerce > Countdown Timer to configure the plugin
 4. Set your cutoff time and customize your messages
@@ -35,8 +35,8 @@ Countdown Timer for WooCommerce adds a dynamic countdown timer to your WooCommer
 ## Directory Structure
 
 ```
-countdown-timer-for-woocommerce/
-├── countdown-timer-for-woocommerce.php  # Main plugin file
+211j-countdown-timer-woocommerce/
+├── 211j-countdown-timer-woocommerce.php  # Main plugin file
 ├── includes/                            # Core plugin classes
 │   ├── class-settings.php               # Settings management
 │   ├── class-countdown-display.php      # Frontend display functionality
@@ -85,7 +85,7 @@ This plugin follows WordPress and WooCommerce coding standards and is ready for 
 
 ## Internationalization
 
-The plugin is fully translation-ready with the text domain `countdown-timer-for-woocommerce`. All user-facing strings are translatable.
+The plugin is fully translation-ready with the text domain `211j-countdown-timer-woocommerce`. All user-facing strings are translatable.
 
 ## License
 
@@ -93,7 +93,7 @@ This plugin is licensed under the GNU General Public License v2 or later.
 
 ## Support
 
-For support and feature requests, please visit the [WordPress.org support forum](https://wordpress.org/support/plugin/countdown-timer-for-woocommerce/) or the [GitHub repository](https://github.com/yourusername/countdown-timer-for-woocommerce).
+For support and feature requests, please visit the [WordPress.org support forum](https://wordpress.org/support/plugin/211j-countdown-timer-woocommerce/) or the [GitHub repository](https://github.com/yourusername/211j-countdown-timer-woocommerce).
 
 ## Changelog
 

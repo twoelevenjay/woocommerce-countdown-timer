@@ -1,6 +1,6 @@
 <?php
 /**
- * Uninstall script for Countdown Timer for WooCommerce
+ * Uninstall script for 211J Countdown Timer for WooCommerce
  *
  * @package Countdown_Timer_For_WooCommerce
  */
