@@ -93,7 +93,7 @@ This plugin is licensed under the GNU General Public License v2 or later.
 
 ## Support
 
-For support and feature requests, please visit the [WordPress.org support forum](https://wordpress.org/support/plugin/211j-countdown-timer-woocommerce/) or the [GitHub repository](https://github.com/yourusername/211j-countdown-timer-woocommerce).
+For support and feature requests, please visit the [WordPress.org support forum](https://wordpress.org/support/plugin/211j-countdown-timer-woocommerce/) or the [GitHub repository](https://github.com/twoelevenjay/woocommerce-countdown-timer).
 
 ## Changelog
 
