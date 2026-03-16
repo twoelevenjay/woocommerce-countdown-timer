@@ -3,7 +3,7 @@ Contributors: twoelevenjay
 Tags: woocommerce, countdown, timer, shipping, urgency
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -57,6 +57,10 @@ By default, the timer does not display on weekends. You can enable weekend displ
 1. Countdown timer displayed on a WooCommerce product page.
 
 == Changelog ==
+
+= 1.0.1 =
+* Tested with WooCommerce 10.6.
+* Tested with WordPress 6.9.
 
 = 1.0.0 =
 * Initial release.
