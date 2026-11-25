@@ -3,7 +3,7 @@
  * Plugin Name: 211J Countdown Timer for WooCommerce
  * Plugin URI: https://211j.com/countdown-timer-for-woocommerce/
  * Description: A professional countdown timer for WooCommerce that shows sentence-format messages like "Order within 02:34:15 for same-day shipping!"
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Countdown Timer Team
  * Author URI: https://211j.com/about
  * License: GPL v2 or later
@@ -11,7 +11,6 @@
  * Text Domain: 211j-countdown-timer-woocommerce
  * Domain Path: /languages
  * Requires at least: 5.3
- * Tested up to: 7.1
  * Requires PHP: 7.4
  * Requires Plugins: woocommerce
  * WC requires at least: 5.0
@@ -24,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants
-define( 'COUNTDOWN_TIMER_FOR_WOOCOMMERCE_VERSION', '1.0.2' );
+define( 'COUNTDOWN_TIMER_FOR_WOOCOMMERCE_VERSION', '1.0.3' );
 define( 'COUNTDOWN_TIMER_FOR_WOOCOMMERCE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'COUNTDOWN_TIMER_FOR_WOOCOMMERCE_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
